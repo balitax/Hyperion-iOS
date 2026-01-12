@@ -1,23 +1,25 @@
-// swift-tools-version:5.6
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
-  name: "Hyperion-iOS",
-  platforms: [
-     .iOS(.v13)
-  ],
-  products: [
-    .library(
-      name: "Hyperion-iOS",
-      targets: ["HyperionCore", "SlowAnimations", "Measurements", "AttributesInspector"]
-    )
-  ],
-  targets: [
-    .target(name: "HyperionCore"),
-    .target(name: "SlowAnimations"),
-    .target(name: "Measurements"),
-    .target(name: "AttributesInspector")
-  ]
+    name: "HyperioniOS",
+    platforms: [
+        .iOS(.v9)
+    ],
+    products: [
+        .library(name: "HyperioniOS", targets: ["HyperioniOS"]),
+        .library(name: "HyperioniOS_Core", targets: ["HyperioniOS_Core"]),
+        .library(name: "HyperioniOS_AttributesInspector", targets: ["HyperioniOS_AttributesInspector"]),
+        .library(name: "HyperioniOS_Measurements", targets: ["HyperioniOS_Measurements"]),
+        // ... plugin lainnya
+    ],
+    dependencies: [
+        // biasanya hampir tidak ada dependency eksternal
+    ],
+    targets: [
+        .target(name: "HyperioniOS_Core", path: "Core"),
+        .target(name: "HyperioniOS_AttributesInspector", dependencies: ["HyperioniOS_Core"], path: "Plugins/AttributesInspector"),
+        .target(name: "HyperioniOS_Measurements", dependencies: ["HyperioniOS_Core"], path: "Plugins/Measurements"),
+        // dst...
+    ]
 )
