@@ -1,25 +1,54 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
+
 import PackageDescription
 
 let package = Package(
     name: "HyperioniOS",
     platforms: [
-        .iOS(.v9)
+        .iOS(.v13)
     ],
     products: [
-        .library(name: "HyperioniOS", targets: ["HyperioniOS"]),
-        .library(name: "HyperioniOS_Core", targets: ["HyperioniOS_Core"]),
-        .library(name: "HyperioniOS_AttributesInspector", targets: ["HyperioniOS_AttributesInspector"]),
-        .library(name: "HyperioniOS_Measurements", targets: ["HyperioniOS_Measurements"]),
-        // ... plugin lainnya
-    ],
-    dependencies: [
-        // biasanya hampir tidak ada dependency eksternal
+        .library(
+            name: "HyperioniOS-Core",
+            targets: ["HyperionCore"]
+        ),
+        .library(
+            name: "HyperioniOS-AttributesInspector",
+            targets: ["HyperioniOS-AttributesInspector"]
+        ),
+        .library(
+            name: "HyperioniOS-SlowAnimations",
+            targets: ["HyperioniOS-SlowAnimations"]
+        ),
+        .library(
+            name: "HyperioniOS-Measurements",
+            targets: ["HyperioniOS-Measurements"]
+        )
     ],
     targets: [
-        .target(name: "HyperioniOS_Core", path: "Core"),
-        .target(name: "HyperioniOS_AttributesInspector", dependencies: ["HyperioniOS_Core"], path: "Plugins/AttributesInspector"),
-        .target(name: "HyperioniOS_Measurements", dependencies: ["HyperioniOS_Core"], path: "Plugins/Measurements"),
-        // dst...
+        .target(
+            name: "HyperionCore",
+            dependencies: [],
+            path: "Core",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "HyperioniOS-AttributesInspector",
+            dependencies: ["HyperionCore"],
+            path: "AttributesInspector",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "HyperioniOS-SlowAnimations",
+            dependencies: ["HyperionCore"],
+            path: "SlowAnimations",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "HyperioniOS-Measurements",
+            dependencies: ["HyperionCore"],
+            path: "Measurements",
+            publicHeadersPath: "include"
+        )
     ]
 )
